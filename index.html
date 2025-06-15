@@ -35,9 +35,13 @@
 
         <!-- Botões de ação -->
         <div class="flex items-center space-x-6 ml-auto ms-4">
-          <a href="#" id="loginLink" class="header-link border-2 border-white bg-transparent text-white px-8 py-2.5 rounded-full font-semibold hover:bg-purple-100 transition-colors hidden md:block" data-bs-target="#exampleModal" data-bs-toggle="modal">Login</a>
-          <a href="#" id="registerLink" class="header-link bg-white text-purple-900 px-8 py-2.5 rounded-full font-semibold hover:bg-purple-100 transition-colors hidden md:block" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastro</a>
-          
+          <a href="#" id="loginLink"
+            class="header-link border-2 border-white bg-transparent text-white px-8 py-2.5 rounded-full font-semibold hover:bg-purple-100 transition-colors hidden md:block"
+            data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
+          <a href="#" id="registerLink"
+            class="header-link bg-white text-purple-900 px-8 py-2.5 rounded-full font-semibold hover:bg-purple-100 transition-colors hidden md:block"
+            data-bs-toggle="modal" data-bs-target="#registerModal">Cadastro</a>
+
           <!-- Botão do menu mobile -->
           <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,15 +52,20 @@
       </div>
 
       <!-- Menu Mobile -->
-      <div id="mobileMenu" class="md:hidden hidden absolute top-20 left-0 right-0 bg-purple-900/80 backdrop-blur-md py-6 px-4 shadow-lg">
+      <div id="mobileMenu"
+        class="md:hidden hidden absolute top-20 left-0 right-0 bg-purple-900/80 backdrop-blur-md py-6 px-4 shadow-lg">
         <div class="flex flex-col space-y-6">
           <a href="#" class="text-white hover:text-purple-200 transition-colors text-lg">Início</a>
           <a href="#" class="text-white hover:text-purple-200 transition-colors text-lg">Recursos</a>
           <a href="#" class="text-white hover:text-purple-200 transition-colors text-lg">Sobre</a>
           <a href="#" class="text-white hover:text-purple-200 transition-colors text-lg">Contato</a>
           <div class="pt-4 border-t border-white/20">
-            <a href="#" class="block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-600 transition-colors text-center mb-4" data-bs-target="#exampleModal" data-bs-toggle="modal">Login</a>
-            <a href="#" class="block bg-white text-purple-900 px-6 py-3 rounded-full font-semibold hover:bg-purple-100 transition-colors text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastro</a>
+            <a href="#"
+              class="block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-600 transition-colors text-center mb-4"
+              data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
+            <a href="#"
+              class="block bg-white text-purple-900 px-6 py-3 rounded-full font-semibold hover:bg-purple-100 transition-colors text-center"
+              data-bs-toggle="modal" data-bs-target="#registerModal">Cadastro</a>
           </div>
         </div>
       </div>
@@ -67,7 +76,7 @@
     <!-- Hero Section -->
     <section class="hero-section relative min-h-screen flex items-center justify-center">
 
-          <!-- Hero background animado -->
+      <!-- Hero background animado -->
       <div class="hero-background">
         <div class="hero-gradient"></div>
         <div class="floating-elements">
@@ -81,14 +90,10 @@
         <div class="particles" id="particles"></div>
         <div class="glow-effect" style="top: 20%; left: 30%;"></div>
         <div class="glow-effect" style="bottom: 20%; right: 30%;"></div>
-        <div class="particles" id="particles"></div>
-        <div class="glow-effect" style="top: 20%; left: 30%;"></div>
-        <div class="glow-effect" style="bottom: 20%; right: 30%;"></div>
       </div>
+      <!-- Hero background fim -->
 
-        <!-- Hero background fim -->
-
-      <div class="absolute inset-0 bg-gradient-to-r from-purple-900/50 to-blue-900/50"></div>
+      <div class=" bg-gradient-to-r from-purple-900/50 to-blue-900/50"></div>
       <div class="relative z-10 text-center px-4">
         <div class="text-content-homepage">
           <div class="text-content-homepage-header text-white">
@@ -101,10 +106,12 @@
             Simplifique sua vida e alcance suas metas com nosso sistema de Kanban.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center my-5">
-            <a href="#" class="header-link bg-white text-purple-900 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-colors">
+            <a href="./public/board-page.html"
+              class="header-link bg-white text-purple-900 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-colors">
               Começar Agora
             </a>
-            <a href="#" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
+            <a href="./public/board-page.html"
+              class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
               Saiba Mais
             </a>
           </div>
@@ -217,12 +224,15 @@
     <section class="py-20 bg-gradient-to-r from-purple-900 to-blue-900 text-white">
       <div class="max-w-4xl mx-auto text-center px-4">
         <h2 class="text-4xl font-bold mb-6">Pronto para organizar sua vida?</h2>
-        <p class="text-xl mb-8 text-gray-200">Junte-se a milhares de pessoas que já transformaram sua produtividade com o Bagunça.</p>
+        <p class="text-xl mb-8 text-gray-200">Junte-se a milhares de pessoas que já transformaram sua produtividade com
+          o Bagunça.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#" class="bg-white text-purple-900 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-colors">
+          <a href="./public/board-page.html"
+            class="bg-white text-purple-900 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-colors">
             Começar Agora
           </a>
-          <a href="#" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
+          <a href="./public/board-page.html"
+            class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
             Fazer um Tour
           </a>
         </div>
@@ -231,29 +241,98 @@
   </main>
   <script src="./src/js/index.js"></script>
   <script src="./src/js/particles.js"></script>
+  <script src="./src/js/features/auth/auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const mobileMenuButton = document.getElementById('mobileMenuButton');
       const mobileMenu = document.getElementById('mobileMenu');
 
       if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', function() {
+        mobileMenuButton.addEventListener('click', function () {
           mobileMenu.classList.toggle('hidden');
         });
 
         // Fechar o menu quando clicar fora
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
           if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
             mobileMenu.classList.add('hidden');
           }
         });
       }
+
+      // Manipulador do formulário de login
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const senha = document.getElementById('loginSenha').value;
+        
+        try {
+          const userData = auth.loginUser(email, senha);
+          // Redirecionar para a página do board após login bem-sucedido
+          window.location.href = './public/board-page.html';
+        } catch (error) {
+          alert(error.message);
+        }
+      });
+
+      // Manipulador do formulário de cadastro
+      document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const nomeCompleto = document.getElementById('nomeCompleto').value;
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmarSenha').value;
+        const termos = document.getElementById('termos').checked;
+
+        try {
+          // Validar senhas
+          if (senha !== confirmarSenha) {
+            throw new Error('As senhas não coincidem');
+          }
+
+          // Validar termos
+          if (!termos) {
+            throw new Error('Você precisa aceitar os termos e condições');
+          }
+
+          // Registrar usuário
+          const userData = auth.registerUser(email, nomeCompleto, senha);
+          
+          // Fechar modal de cadastro
+          const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+          registerModal.hide();
+
+          // Redirecionar para a página do board
+          window.location.href = './public/board-page.html';
+        } catch (error) {
+          alert(error.message);
+        }
+      });
+
+      // Adicionar link para login no texto de cadastro
+      document.querySelector('#registerModal .p .span').addEventListener('click', function() {
+        const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+        registerModal.hide();
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+      });
+
+      // Adicionar link para cadastro no texto de login
+      document.querySelector('#loginModal .p .span').addEventListener('click', function() {
+        const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+        loginModal.hide();
+        const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+        registerModal.show();
+      });
     });
   </script>
 </body>
 
 <footer class="relative my-5">
-  <div class="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-purple-900/50 to-blue-900/30 backdrop-blur-sm"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-purple-900/50 to-blue-900/30 backdrop-blur-sm">
+  </div>
   <div class="relative max-w-screen-xl mx-auto px-4 py-8">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       <!-- Logo e Descrição -->
@@ -262,7 +341,7 @@
           <img src="./src/img/logo-bagunca.svg" class="h-8 mr-3" alt="Logo Bagunça" />
         </div>
         <p class="text-gray-200 mb-4">
-          Organize suas tarefas e projetos de forma simples e eficiente. 
+          Organize suas tarefas e projetos de forma simples e eficiente.
           Transforme o caos em ordem com nosso sistema de Kanban.
         </p>
         <div class="flex space-x-4">
@@ -327,76 +406,142 @@
   </div>
 </footer>
 
-<!--Modal teste simples-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal de Login -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="form modal-content ">
+    <form class="form modal-content" id="loginForm">
       <div class="d-flex flex-column mb-2">
         <div class="d-flex justify-content-between align-items-center">
-            <p class="fw-medium bem-vindo mb-0">BEM VINDO</p>
-            <button type="button" class="btn-close border-0 bg-transparent p-0" data-bs-dismiss="modal" aria-label="Close"></button>
+          <p class="fw-medium bem-vindo mb-0">BEM VINDO</p>
+          <button type="button" class="btn-close border-0 bg-transparent p-0" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <legend class="fw-bold-5 h3">Login</legend>
+      </div>
+      <div class="">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="loginSenha">Senha</label>
+          <input type="password" id="loginSenha" class="form-control" required>
+        </div>
+
+        <button type="submit" class="button-submit">Entrar</button>
+        <p class="p mb-3">Ou</p>
+        <div class="flex-row">
+          <div>
+            <button class="d-flex justify-center align-items-center gap-2 btn btn-outline-body shadow my-3 social-login-btn disabled" disabled style="opacity: 0.5; cursor: not-allowed;">
+              <img src="src/img/icons-sign/icon-goooooogle.svg" alt="">
+              <span>Login com o Google</span>
+            </button>
+          </div>
+          <div class="flex-row">
+            <div>
+              <button class="d-flex justify-center align-items-center gap-2 btn btn-body shadow my-3 social-login-btn disabled" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <img src="src/img/icons-sign/icon-facebaks.svg" alt="">
+                <span>Login com o Facebook</span>
+              </button>
+            </div>
+            <div class="flex-row">
+              <div>
+                <button class="d-flex justify-center align-items-center gap-2 btn btn-body shadow my-3 social-login-btn disabled" disabled style="opacity: 0.5; cursor: not-allowed;">
+                  <img src="src/img/icons-sign/icon-pornHub.svg" alt="">
+                  <span>Login com o GitHub</span>
+                </button>
+              </div>
+              <p class="p">Não tem uma conta? <span class="span"><b>Fazer cadastro</b></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal de Cadastro -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="form modal-content" id="cadastroForm">
+      <div class="d-flex flex-column mb-2">
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="fw-medium bem-vindo mb-0">BEM VINDO</p>
+          <button type="button" class="btn-close border-0 bg-transparent p-0" data-bs-dismiss="modal"
+            aria-label="Close"></button>
         </div>
         <legend class="fw-bold-5 h3">Cadastro</legend>
-    </div>
+      </div>
       <div class="">
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" id="email" value="johnsondoe@nomail.com" class="form-control">
+          <input type="email" id="email" class="form-control" required>
         </div>
 
         <div class="">
           <div class="form-group">
-            <label for="email">Nome completo</label>
-            <input type="text" id="email" value="johnson doe junior" class="form-control">
+            <label for="nomeCompleto">Nome completo</label>
+            <input type="text" id="nomeCompleto" class="form-control" required>
           </div>
 
           <div class="">
             <div class="form-group">
-              <label for="email">Criar senha</label>
-              <input type="password" id="email" value="johnsondoe@nomail.com" class="form-control">
+              <label for="senha">Criar senha</label>
+              <input type="password" id="senha" class="form-control" required>
             </div>
 
             <div class="">
               <div class="form-group">
-                <label for="email">Confirmar senha</label>
-                <input type="password" id="email" value="johnsondoe@nomail.com" class="form-control">
+                <label for="confirmarSenha">Confirmar senha</label>
+                <input type="password" id="confirmarSenha" class="form-control" required>
               </div>
-              <div>
 
+              <div>
                 <div>
-                  <label class="checkbox-container ">
-                    <input class="custom-checkbox" checked="" type="checkbox">
+                  <label class="checkbox-container">
+                    <input class="custom-checkbox" type="checkbox" id="termos" required>
                     <span class="checkmark"></span>
                     <p class="termos-servicos">Eu concordo com os <b><u>termos & condições</u></b> e a <b><u>política de
                           privacidade</u></b></p>
                   </label>
                 </div>
 
-                <button class=" button-submit"> <a href="./public/board-page.html">Criar conta</a> </button>
+                <button type="submit" class="button-submit">Criar conta</button>
                 <p class="p mb-3">Ou</p>
                 <div class="flex-row">
-
                   <div>
-                    <button class="d-flex justify-center align-items-center gap-2 btn btn-outline-body shadow my-3">
+                    <button class="d-flex justify-center align-items-center gap-2 btn btn-outline-body shadow my-3 social-login-btn disabled" disabled style="opacity: 0.5; cursor: not-allowed;">
                       <img src="src/img/icons-sign/icon-goooooogle.svg" alt="">
-                      <a href="./public/board-page.html">Login com o Google</a>
+                      <span>Login com o Google</span>
                     </button>
                   </div>
                   <div class="flex-row">
                     <div>
-                      <button class="d-flex justify-center align-items-center gap-2 btn btn-body shadow my-3">
+                      <button class="d-flex justify-center align-items-center gap-2 btn btn-body shadow my-3 social-login-btn disabled" disabled style="opacity: 0.5; cursor: not-allowed;">
                         <img src="src/img/icons-sign/icon-facebaks.svg" alt="">
-                        <a href="./public/board-page.html">Login com o Facebook</a>
+                        <span>Login com o Facebook</span>
                       </button>
                     </div>
-                    <div class=" flex-row">
+                    <div class="flex-row">
                       <div>
-                        <button class="d-flex justify-center align-items-center gap-2 btn btn-body shadow my-3">
+                        <button class="d-flex justify-center align-items-center gap-2 btn btn-body shadow my-3 social-login-btn disabled" disabled style="opacity: 0.5; cursor: not-allowed;">
                           <img src="src/img/icons-sign/icon-pornHub.svg" alt="">
-                          <a href="./public/board-page.html">Login com o GitHub</a>
+                          <span>Login com o GitHub</span>
                         </button>
                       </div>
                       <p class="p">Ja tem uma conta? <span class="span"><b>Fazer login</b></span></p>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
 
 </html>
