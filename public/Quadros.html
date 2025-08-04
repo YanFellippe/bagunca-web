@@ -12,6 +12,29 @@
     <link rel="stylesheet" href="../src/css/tutorial.css">
     <style>
         /* Estilos globais para scrollbar */
+        .cursor-grabbing {
+            cursor: grabbing !important;
+        }
+
+        .sortable-ghost {
+            opacity: 0.4;
+            background-color: #4B5563; /* cinza mais escuro */
+        }
+
+        .sortable-drag {
+            cursor: grabbing;
+            transform: rotate(2deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+        user-select: none; /* impede seleção de texto */
+        }
+
+        .board-container * {
+        user-select: none;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -109,34 +132,24 @@
             flex-direction: column;
         }
 
-        /* MODIFICAÇÃO PRINCIPAL 1 - Scroll vertical nas listas */
         .list-content {
             overflow-y: auto;
-            overflow-x: hidden;
             max-height: calc(100vh - 250px);
             min-height: 50px;
             scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
             flex-grow: 1;
-            -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
-            touch-action: pan-y; /* Permite apenas gestos verticais */
-            overscroll-behavior: contain; /* Evita que o scroll afete o elemento pai */
+            mask-image: linear-gradient(to top, transparent, black 5px, black calc(100% - 5px), transparent);
+            -webkit-mask-image: linear-gradient(to top, transparent, black 5px, black calc(100% - 5px), transparent);
         }
 
         .list-content.has-many-cards {
             max-height: calc(100vh - 250px);
         }
 
-        /* MODIFICAÇÃO PRINCIPAL 2 - Scroll horizontal no quadro */
         .board-container {
             align-items: flex-start;
             padding-bottom: 20px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x;
-            overscroll-behavior: contain;
-            scroll-snap-type: x proximity;
         }
 
         /* Estilo para o scroll horizontal fixo */
@@ -155,6 +168,13 @@
             background: rgba(156, 163, 175, 0.5);
             border-radius: 6px;
             transition: width 0.2s ease;
+        }
+
+        @media (max-width: 768px) {
+            .list {
+                width: 220px;
+                min-width: 220px;
+            }
         }
 
         /* Estilos responsivos */
@@ -228,18 +248,15 @@
             }
         }
 
-        /* MODIFICAÇÃO PRINCIPAL 3 - Melhorias para mobile */
         @media (max-width: 768px) {
             .board-container {
+                overflow-x: auto;
                 padding-bottom: 1rem;
-                gap: 0.5rem;
-                scroll-padding: 0.5rem;
-            }
-
-            .list {
-                width: 220px;
-                min-width: 220px;
-                scroll-snap-align: start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                display: flex;
+                gap: 1rem;
+                padding: 0.5rem;
             }
 
             .add-list-btn {
@@ -250,12 +267,6 @@
 
             .card {
                 touch-action: none;
-                padding: 12px;
-            }
-
-            .list-content {
-                mask-image: none;
-                -webkit-mask-image: none;
             }
         }
 
@@ -441,7 +452,7 @@
                     <div class="flex flex-wrap items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
                             <h1 class="text-2xl font-bold">Projeto Website</h1>
-                            <button class="text-gray-400 hover:text-white">
+                            <button class="text-gray-400 hover:text-white bg-gray-700 hover:bg-gray-600 p-2 rounded-lg transition-colors">
                                 <i class="fas fa-star"></i>
                             </button>
                             <div class="flex -space-x-2">
@@ -484,6 +495,19 @@
                                 <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                             </div>
                         </div>
+
+                        <!-- Dropdown do usuário -->
+                        <!-- <div class="dropdown">
+                            <div id="userInitials" class="bg-blue-500 text-white p-2 rounded-full cursor-pointer flex items-center justify-center" style="width: 40px; height: 40px; text-align: center;"></div>
+                            <div class="dropdown-content">
+                                <h3 class="text-lg mb-2">Profile</h3>
+                                <a href="./perfil1.html">Ver Perfil</a>
+                                <a href="./perfil1.html">Configurações</a>
+                                <a href="./sobreNos.html">Ajuda</a>
+                                <hr class="my-2">
+                                <a href="../index.html">Sair</a>
+                            </div>
+                        </div> -->
                     </div>
 
                     <!-- Tags filtradas ativas -->
@@ -493,7 +517,7 @@
             </header>
 
             <!-- Board -->
-            <div class="board-container flex space-x-6 pb-4" id="board-container">
+            <div class="board-container flex space-x-6 overflow-x-auto pb-4" id="board-container">
                 <!-- Para Fazer -->
                 <div id="para-fazer" class="list w-80 bg-gray-800 rounded-lg p-4 flex flex-col">
                     <div class="flex justify-between items-center mb-4">
@@ -628,8 +652,17 @@
         }
 
         // Função para abrir o modal de edição
-        function openEditCardModal(card) {
-            currentEditingCard = card;
+        function openEditCardModal(cardElement) {
+            // Se for um objeto de dados do cartão (do board.js), usar showCardModal
+            if (typeof cardElement === 'object' && cardElement.id) {
+                if (typeof window.showCardModal === 'function') {
+                    window.showCardModal(cardElement);
+                    return;
+                }
+            }
+            
+            // Compatibilidade com cartões HTML antigos
+            currentEditingCard = cardElement;
             const modal = document.getElementById('edit-card-modal');
             const titleInput = document.getElementById('edit-card-title');
             const descriptionInput = document.getElementById('edit-card-description');
@@ -637,12 +670,12 @@
             const commentsContainer = document.getElementById('edit-card-comments');
 
             // Preencher os campos com os dados do card
-            titleInput.value = card.querySelector('h3').textContent;
-            descriptionInput.value = card.querySelector('p')?.textContent || '';
+            titleInput.value = cardElement.querySelector('h3').textContent;
+            descriptionInput.value = cardElement.querySelector('p')?.textContent || '';
 
             // Limpar e preencher as etiquetas
             labelsContainer.innerHTML = '';
-            const cardLabels = card.getAttribute('data-labels')?.split(',') || [];
+            const cardLabels = cardElement.getAttribute('data-labels')?.split(',') || [];
             Object.entries(window.labels).forEach(([key, label]) => {
                 const labelElement = document.createElement('label');
                 labelElement.className = 'flex items-center space-x-2 p-2 rounded hover:bg-gray-700 cursor-pointer';
@@ -663,7 +696,7 @@
 
             // Limpar e preencher os comentários
             commentsContainer.innerHTML = '';
-            const comments = card.getAttribute('data-comments')?.split('|') || [];
+            const comments = cardElement.getAttribute('data-comments')?.split('|') || [];
             comments.forEach(comment => {
                 if (comment) {
                     const commentElement = document.createElement('div');
@@ -748,21 +781,33 @@
 
         // Função para salvar o estado do quadro
         function saveBoardState() {
+            // Se já temos o estado global, apenas salva no localStorage
+            if (window.boardState && window.boardState.lists) {
+                localStorage.setItem('boardState', JSON.stringify(window.boardState));
+                return;
+            }
+
+            // Fallback: lê do DOM (compatibilidade com sistema antigo)
             const state = {
                 lists: {}
             };
 
             document.querySelectorAll('.list').forEach(list => {
                 const listId = list.id;
-                const cards = Array.from(list.querySelectorAll('.card')).map(card => ({
+                const cards = Array.from(list.querySelectorAll('.card')).map((card, index) => ({
+                    id: card.dataset.cardId || `card_${Date.now()}_${index}`,
                     title: card.querySelector('h3').textContent,
                     description: card.querySelector('p')?.textContent || '',
-                    labels: card.getAttribute('data-labels')?.split(',') || [],
-                    comments: card.getAttribute('data-comments')?.split('|') || []
+                    labels: card.getAttribute('data-labels')?.split(',').filter(l => l) || [],
+                    comments: 0,
+                    attachments: 0,
+                    assignees: [],
+                    deadline: null
                 }));
                 state.lists[listId] = cards;
             });
 
+            window.boardState = state;
             localStorage.setItem('boardState', JSON.stringify(state));
         }
 
@@ -826,43 +871,32 @@
 
         // Função para adicionar um cartão
         function addCard(listId, title, description, labels = []) {
-            const list = document.getElementById(listId);
-            if (!list) return;
-        
-            const listContent = list.querySelector('.list-content');
-            const cards = listContent.querySelectorAll('.card');
+            // Gera um ID único para o cartão
+            const cardId = 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
-            // Verifica se já tem 6 cartões para adicionar a classe de scroll
-            if (cards.length >= 6) {
-                listContent.classList.add('has-many-cards');
+            // Cria o objeto do cartão compatível com board.js
+            const cardData = {
+                id: cardId,
+                title: title,
+                description: description || '',
+                labels: labels || [],
+                comments: 0,
+                attachments: 0,
+                assignees: [],
+                deadline: null
+            };
+            
+            // Adiciona o cartão ao estado global
+            if (!window.boardState.lists[listId]) {
+                window.boardState.lists[listId] = [];
             }
-        
-            const card = document.createElement('div');
-            card.className = 'card bg-gray-700 rounded-lg p-4 cursor-pointer hover:bg-gray-600';
-            card.setAttribute('draggable', 'true');
-            card.setAttribute('data-labels', labels.join(','));
-            card.setAttribute('data-comments', '');
+            window.boardState.lists[listId].push(cardData);
             
-            card.innerHTML = `
-                <h3 class="font-medium">${title}</h3>
-                ${description ? `<p class="text-sm text-gray-400 mt-2">${description}</p>` : ''}
-                ${labels.length > 0 ? `
-                    <div class="flex gap-2 mt-3">
-                        ${labels.map(label => `
-                            <span class="px-2 py-1 ${window.labels[label].color} rounded text-xs">
-                                ${window.labels[label].text}
-                            </span>
-                        `).join('')}
-                    </div>
-                ` : ''}
-            `;
-        
-            card.addEventListener('click', () => {
-                openEditCardModal(card);
-            });
-        
-            listContent.appendChild(card);
-            filterCards();
+            // Salva o estado e re-renderiza o quadro
+            saveBoardState();
+            if (typeof window.renderBoard === 'function') {
+                window.renderBoard();
+            }
         }
 
         // Carregar tema e estado do quadro
@@ -918,12 +952,26 @@
             const savedState = localStorage.getItem('boardState');
             if (savedState) {
                 window.boardState = JSON.parse(savedState);
+            } else {
+                // Inicializar com estado vazio se não houver dados salvos
+                window.boardState = {
+                    lists: {
+                        'para-fazer': [],
+                        'fazendo': [],
+                        'concluido': []
+                    }
+                };
             }
 
-            // Renderizar o quadro inicial
-            if (typeof window.renderBoard === 'function') {
-                window.renderBoard();
-            }
+            // Aguardar um pouco para garantir que todos os scripts foram carregados
+            setTimeout(() => {
+                // Renderizar o quadro inicial
+                if (typeof window.renderBoard === 'function') {
+                    window.renderBoard();
+                } else {
+                    console.warn('window.renderBoard não está disponível');
+                }
+            }, 100);
 
             // Inicializar botões
             const addListButton = document.querySelector('.add-list-btn');
@@ -987,58 +1035,111 @@
                 overlay.classList.remove('active');
             });
 
-            // Adicione isso ao seu arquivo JavaScript existente
+            document.querySelectorAll('.list-content').forEach(list => {
+                new Sortable(list, {
+                    group: 'shared', // permite mover entre listas
+                    animation: 150,  // animação suave
+                    ghostClass: 'sortable-ghost', // classe aplicada ao "cartão sombra"
+                    dragClass: 'sortable-drag',   // classe aplicada ao cartão sendo arrastado
+                    onEnd: (evt) => {
+                        // Atualizar o estado global após movimentação
+                        const fromListId = evt.from.closest('.list').id;
+                        const toListId = evt.to.closest('.list').id;
+                        const cardElement = evt.item;
+                        const cardId = cardElement.dataset.cardId;
+                        
+                        if (cardId && fromListId !== toListId) {
+                            // Encontrar o cartão no estado global
+                            const fromList = window.boardState.lists[fromListId];
+                            const cardIndex = fromList.findIndex(card => card.id === cardId);
+                            
+                            if (cardIndex !== -1) {
+                                // Remover da lista origem
+                                const [movedCard] = fromList.splice(cardIndex, 1);
+                                
+                                // Adicionar na lista destino
+                                window.boardState.lists[toListId].push(movedCard);
+                                
+                                console.log(`Cartão movido de ${fromListId} para ${toListId}`);
+                            }
+                        }
+                        
+                        saveBoardState(); // salva novo estado após movimentação
+                        
+                        // Re-renderizar para garantir consistência
+                        setTimeout(() => {
+                            if (typeof window.renderBoard === 'function') {
+                                window.renderBoard();
+                            }
+                        }, 100);
+                    }
+                });
+            });
+        });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Prevenir o comportamento padrão de toque para evitar conflitos
-    document.querySelectorAll('.list-content').forEach(list => {
-        list.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 1) {
-                this.isScrolling = true;
-                this.startY = e.touches[0].clientY;
-                this.scrollTop = this.scrollTop;
-            }
+    // Função para permitir que o usuário possa fazer o drag de movimentação do projeto
+    (function enableDragToScroll() {
+        const container = document.getElementById('board-container');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            container.classList.add('cursor-grabbing');
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
         });
-        
-        list.addEventListener('touchmove', function(e) {
-            if (!this.isScrolling) return;
-            const y = e.touches[0].clientY;
-            const dy = y - this.startY;
-            this.scrollTop = this.scrollTop - dy;
-            this.startY = y;
+
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.classList.remove('cursor-grabbing');
         });
-        
-        list.addEventListener('touchend', function() {
-            this.isScrolling = false;
+
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.classList.remove('cursor-grabbing');
         });
-    });
-    
-    // Mesmo para scroll horizontal
-    const boardContainer = document.getElementById('board-container');
-    if (boardContainer) {
-        boardContainer.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 1) {
-                this.isScrolling = true;
-                this.startX = e.touches[0].clientX;
-                this.scrollLeft = this.scrollLeft;
-            }
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 1.5; // Multiplicador para ajustar a velocidade
+            container.scrollLeft = scrollLeft - walk;
         });
-        
-        boardContainer.addEventListener('touchmove', function(e) {
-            if (!this.isScrolling) return;
-            const x = e.touches[0].clientX;
-            const dx = x - this.startX;
-            this.scrollLeft = this.scrollLeft - dx;
-            this.startX = x;
+    })();
+
+    const container = document.getElementById('board-container');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            container.classList.add('cursor-grabbing');
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+
+            // BLOQUEAR SELEÇÃO DE TEXTO TEMPORARIAMENTE
+            document.body.style.userSelect = 'none';
         });
-        
-        boardContainer.addEventListener('touchend', function() {
-            this.isScrolling = false;
+
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.classList.remove('cursor-grabbing');
+
+            // RESTAURAR SELEÇÃO
+            document.body.style.userSelect = '';
         });
-    }
-});
+
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.classList.remove('cursor-grabbing');
+            document.body.style.userSelect = '';
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="../src/js/features/board/board.js"></script>
     <script src="../src/js/features/board/modals.js"></script>
     <script src="../src/js/features/board/quadros.js"></script>
